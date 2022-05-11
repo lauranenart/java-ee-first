@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head/>
+<h:body>
+    <h2>Clients in #{clientsOfShop.shop.title} #{clientsOfShop.shop.address} shop:</h2>
+    <ol>
+        <ui:repeat value="#{clientsOfShop.shop.clients}" var="client">
+            <li>
+                <h:link value="#{client.firstName} #{client.lastName}" outcome="items?clientId=#{client.id}" />
+            </li>
+        </ui:repeat>
+    </ol>
+    <h:form>
+        <h:inputText a:placeholder="first name" value="#{clientsOfShop.clientToCreate.firstName}" required="true" />
+        <h:inputText a:placeholder="last name" value="#{clientsOfShop.clientToCreate.lastName}" required="true" />
+        <h:commandButton value="Add client to the shop"
+                         actionListener="#{clientsOfShop.createClient}"
+                         action="#{'clients?faces-redirect=true&amp;shopId='.concat(clientsOfShop.shop.id)}">
+            <f:param name="shopId" value="#{clientsOfShop.shop.id}" />
+        </h:commandButton>
+    </h:form>
+    <h:link outcome="index" value="Back to shops page"/>
+</h:body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+>
+
+<h:head/>
+<h:body>
+    <h2>Shops:</h2>
+    <ol>
+        <ui:repeat value="#{shops.allShops}" var="shop">
+            <li><h:link value="#{shop.title} #{shop.address}" outcome="clients?shopId=#{shop.id}" /></li>
+        </ui:repeat>
+    </ol>
+    <h:form>
+        <h:inputText a:placeholder="title" value="#{shops.shopToCreate.title}" required="true" />
+        <h:inputText a:placeholder="address" value="#{shops.shopToCreate.address}" required="true" />
+        <h:commandButton value="Add new shop" actionListener="#{shops.createShop}" action="index?faces-redirect=true"/>
+    </h:form>
+</h:body>
+
+</html>
