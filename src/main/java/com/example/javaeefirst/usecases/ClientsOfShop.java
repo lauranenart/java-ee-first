@@ -1,9 +1,11 @@
 package com.example.javaeefirst.usecases;
 
 import com.example.javaeefirst.entities.Client;
+import com.example.javaeefirst.entities.Item;
 import com.example.javaeefirst.entities.Shop;
 import com.example.javaeefirst.entities.ShoppingCart;
 import com.example.javaeefirst.persistence.ClientsDAO;
+import com.example.javaeefirst.persistence.ItemsDAO;
 import com.example.javaeefirst.persistence.ShoppingCartsDAO;
 import com.example.javaeefirst.persistence.ShopsDAO;
 import lombok.Getter;
@@ -14,6 +16,7 @@ import javax.enterprise.inject.Model;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Map;
 
 @Model
@@ -27,6 +30,9 @@ public class ClientsOfShop {
 
     @Inject
     private ShopsDAO shopsDAO;
+
+    @Inject
+    private ItemsDAO itemsDAO;
 
     @Getter @Setter
     private Shop shop;

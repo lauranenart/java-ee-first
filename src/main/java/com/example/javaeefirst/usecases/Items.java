@@ -32,10 +32,21 @@ public class Items {
 
     @Getter
     @Setter
+    private Item itemToAdd = new Item();
+
+    @Getter
+    @Setter
     private Client client;
 
     @Getter
     private List<Item> allItems;
+
+    @Getter
+    private List<Item> allClientItems;
+
+    @Getter
+    @Setter
+    private Integer itemId;
 
     @Getter
     @Setter
@@ -49,16 +60,26 @@ public class Items {
                 FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         Integer clientId = Integer.parseInt(requestParameters.get("clientId"));
         this.client = clientsDAO.findOne(clientId);
+
+       // loadAllClientItems();
     }
 
     private void loadAllItems(){
         this.allItems = itemsDAO.loadAll();
     }
+    private void loadAllClientItems(){
+        this.allClientItems = shoppingCartsDAO.loadAllClientItems(this.client.getShoppingCart().getId());
+    }
 
     @Transactional
     public void createItem() {
-        itemToCreate.getShoppingCarts().add(this.client.getShoppingCart());
         itemsDAO.persist(itemToCreate);
-        this.client.getShoppingCart().getItems().add(itemToCreate);
+    }
+
+    @Transactional
+    public void addItem(){
+        itemToAdd = itemsDAO.findOne(itemId);
+        client.getShoppingCart().getItems().add(itemToAdd);
+        shoppingCartsDAO.update(client.getShoppingCart());
     }
 }

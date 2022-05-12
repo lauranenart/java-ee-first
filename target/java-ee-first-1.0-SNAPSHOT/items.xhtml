@@ -4,14 +4,25 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+>
 <h:head/>
 <h:body>
     <h2>Items of #{items.client.firstName} #{items.client.lastName} client:</h2>
     <ol>
+        <ui:repeat value="#{items.allClientItems}" var="item">
+            <li>
+                <p> #{item.title} #{item.price} #{item.barcode}</p>
+            </li>
+        </ui:repeat>
+    </ol>
+
+
+    <ol>
         <ui:repeat value="#{items.allItems}" var="item">
             <li>
-                 <p> #{item.title} #{item.price} #{item.barcode} </p>
+                 <p> #{item.title} #{item.price} #{item.barcode}</p>
             </li>
         </ui:repeat>
     </ol>
@@ -19,12 +30,24 @@
         <h:inputText a:placeholder="title" value="#{items.itemToCreate.title}" required="true" />
         <h:inputText a:placeholder="price" value="#{items.itemToCreate.price}" required="true" />
         <h:inputText a:placeholder="barcode" value="#{items.itemToCreate.barcode}" required="true" />
-        <h:commandButton value="Add item to the shopping cart"
+        <h:commandButton value="Create new item"
                          actionListener="#{items.createItem}"
                          action="#{'items?faces-redirect=true&amp;clientId='.concat(items.client.id)}">
             <f:param name="clientId" value="#{items.client.id}" />
         </h:commandButton>
     </h:form>
+
+    <h:form>
+        <h:selectOneMenu value = "#{items.itemId}" converter="javax.faces.Integer">
+            <f:selectItems value="#{items.allItems}" var="item" itemValue="#{item.id}" itemLabel="#{item.title}"/>
+        </h:selectOneMenu>
+        <h:commandButton value="Add item to the shopping cart"
+                         actionListener="#{items.addItem}"
+                         action="#{'items?faces-redirect=true&amp;clientId='.concat(items.client.id)}">
+            <f:param name="clientId" value="#{items.client.id}" />
+        </h:commandButton>
+    </h:form>
+
     <h:link outcome="clients?shopId=#{items.client.shop.id}" value="Back to clients page"/>
 </h:body>
 </html>
