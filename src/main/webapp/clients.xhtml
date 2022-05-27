@@ -10,7 +10,7 @@
     <h2>Clients in #{clientsOfShop.shop.title} #{clientsOfShop.shop.address} shop:</h2>
     <h:form>
         <h:outputText value="shop address: "/>
-        <h:inputText a:placeholder="enter the value" value="#{clientsOfShop.shop.address}" required="true" />
+        <h:inputText a:placeholder="enter the value" value="#{clientsOfShop.newShopAddress}" required="true" />
         <h:commandButton value="update" action="#{clientsOfShop.updateShopAddress()}">
             <f:param name="shopId" value="#{clientsOfShop.shop.id}" />
         </h:commandButton>
