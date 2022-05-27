@@ -28,6 +28,9 @@ public class Shop implements Serializable {
     @OneToMany(mappedBy = "shop")
     private List<Client> clients = new ArrayList<>();
 
+    @Version
+    private int version;
+
     public Shop() { }
 
     @Override

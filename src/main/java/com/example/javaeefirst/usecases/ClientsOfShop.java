@@ -15,6 +15,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.persistence.OptimisticLockException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
@@ -60,5 +61,17 @@ public class ClientsOfShop {
 
         shoppingCartToCreate.setClient(clientToCreate);
         shoppingCartsDAO.persist(shoppingCartToCreate);
+    }
+
+    @Transactional
+    public String updateShopAddress() {
+        try{
+            Shop previoushop = shopsDAO.findOne(shop.getId());
+            previoushop.setAddress(shop.getAddress());
+            shopsDAO.update(shop);
+        } catch (OptimisticLockException e) {
+            return "/clients.xhtml?faces-redirect=true&shopId=" + this.shop.getId() + "&error=optimistic-lock-exception";
+        }
+        return "clients.xhtml?shopId=" + this.shop.getId() + "&faces-redirect=true&already-renamed=true";
     }
 }

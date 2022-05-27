@@ -61,14 +61,15 @@ public class Items {
         Integer clientId = Integer.parseInt(requestParameters.get("clientId"));
         this.client = clientsDAO.findOne(clientId);
 
-       // loadAllClientItems();
+        loadAllClientItems();
     }
 
     private void loadAllItems(){
         this.allItems = itemsDAO.loadAll();
     }
     private void loadAllClientItems(){
-        this.allClientItems = shoppingCartsDAO.loadAllClientItems(this.client.getShoppingCart().getId());
+        //this.allClientItems = shoppingCartsDAO.loadAllClientItems(this.client.getShoppingCart().getId());
+        this.allClientItems = shoppingCartsDAO.findOne(this.client.getShoppingCart().getId()).getItems();
     }
 
     @Transactional

@@ -10,13 +10,6 @@
 <h:head/>
 <h:body>
     <h2>Items of #{items.client.firstName} #{items.client.lastName} client:</h2>
-    <ol>
-        <ui:repeat value="#{items.allClientItems}" var="item">
-            <li>
-                <p> #{item.title} #{item.price} #{item.barcode}</p>
-            </li>
-        </ui:repeat>
-    </ol>
 
 
     <ol>
@@ -47,6 +40,14 @@
             <f:param name="clientId" value="#{items.client.id}" />
         </h:commandButton>
     </h:form>
+
+    <ol>
+        <ui:repeat value="#{items.allClientItems}" var="item">
+            <li>
+                <p> #{item.title}</p>
+            </li>
+        </ui:repeat>
+    </ol>
 
     <h:link outcome="clients?shopId=#{items.client.shop.id}" value="Back to clients page"/>
 </h:body>
